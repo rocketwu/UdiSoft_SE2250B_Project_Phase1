@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,9 @@ public class Hero : MonoBehaviour {
     public float speed = 30;
     public float rollMult = -45;
     public float pitchMult = 30;
+    public GameObject projectilePrefab;
+    public float projectileSpeed = 40;
+
     
     //for restrain=============
     //public float Bleeding = 1f;
@@ -79,10 +83,20 @@ public class Hero : MonoBehaviour {
 
         transform.rotation = Quaternion.Euler(y * pitchMult, x * rollMult, 0);
 
-        
+        if (projectilePrefab!=null && Input.GetKeyDown(KeyCode.Space))
+        {
+            TempFire();
+        }
 
 		
 	}
+
+    private void TempFire()
+    {
+        GameObject proj = Instantiate<GameObject>(projectilePrefab);
+        proj.transform.position = transform.position;
+        proj.GetComponent<Rigidbody>().AddForce(new Vector3(0, projectileSpeed, 0), ForceMode.VelocityChange);
+    }
 
     private void OnTriggerEnter(Collider other)
     {

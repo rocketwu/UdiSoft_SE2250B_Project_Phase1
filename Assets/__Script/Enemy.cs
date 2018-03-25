@@ -31,5 +31,15 @@ public abstract class Enemy : MonoBehaviour {
 		}
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        GameObject go = collision.gameObject;
+        if (go.tag == "ProjectileHero")
+        {
+            DestoryEnemy();
+            Destroy(go);
+        }
+    }
+
 
 }
